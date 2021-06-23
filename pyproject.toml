@@ -1,19 +1,8 @@
 [tool.poetry]
 name = "pyruler"
-version = "0.0.0"
+version = "0.9.0"
 description = "Simple and powerful rule engine to generate complex data validations on an easy way"
 authors = ["Eduardo Aguilar <dante.aguilar41@gmail.com>"]
-
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "0.9.0"
-tag_format = "$version"
-bump_message = "bump: Semantic Release Bot: Release Version: $new_version 🤖🚀 [skip ci]"
-version_files = [
-    "pyproject.toml:version",
-    "setup.py:version"
-]
-
 
 [tool.poetry.dependencies]
 python = "^3.8"
