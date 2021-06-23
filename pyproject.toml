@@ -6,7 +6,7 @@ authors = ["Eduardo Aguilar <dante.aguilar41@gmail.com>"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.8.0"
+version = "0.9.0"
 tag_format = "$version"
 bump_message = "bump: Semantic Release Bot: Release Version: $new_version 🤖🚀 [skip ci]"
 version_files = [
