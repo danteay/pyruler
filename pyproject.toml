@@ -25,6 +25,7 @@ expects = "~=0.9.0"
 yapf = "~=0.31.0"
 pylint = "~=2.8.2"
 isort = "~=5.9.1"
+radon = "~=5.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
