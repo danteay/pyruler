@@ -71,6 +71,26 @@ with description('Should test RuleSet configuration') as self:
 
         assert True
 
+    with it('apply rule set multiple times'):
+        rule_set = RuleSet(name='set1')
+
+        rule_set.add_rule(Rule(name='rule1', resolver=lambda x: True))
+        rule_set.add_rule(Rule(name='rule2', resolver=lambda x: True))
+
+        rule_set.apply({})
+        rule_set.apply({})
+        rule_set.apply({})
+
+        assert True
+
+    with it('raises error for not configured rules on RuleSet'):
+        rule_set = RuleSet(name='set1')
+
+        try:
+            rule_set.apply({})
+        except Exception as error:
+            expect(error.args[0]).to(equal("No rules configured on rule set set1"))
+
 with description('Should test Ruler configuration') as self:
     with it('creates ruler instance'):
         ruler = Ruler()

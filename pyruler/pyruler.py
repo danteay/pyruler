@@ -1,6 +1,5 @@
 """Ruler definitions."""
 
-from queue import Queue
 from typing import (
     Any,
     AnyStr,
@@ -14,7 +13,14 @@ from typing import (
     Union,
 )
 
-from .errors import RuleError, RulerConfigError, RulerError, RuleSetConfigError
+from .errors import (
+    RuleError,
+    RulerConfigError,
+    RulerError,
+    RuleSetConfigError,
+    RuleSetError,
+)
+from .linked_list import LinkedList
 
 
 class Rule:
@@ -57,12 +63,12 @@ class RuleSet:
     """Rule Set definition to apply a set of rules to a context info."""
 
     _name: AnyStr
-    _rules: Queue
+    _rules: LinkedList[Rule]
     _rule_hashes: Set[int]
 
     def __init__(self, name: AnyStr):
         self._name = name
-        self._rules = Queue()
+        self._rules = LinkedList()
         self._rule_hashes = set()
 
     @property
@@ -80,7 +86,7 @@ class RuleSet:
         if rule.__hash__() in self._rule_hashes:
             raise RuleSetConfigError(f"Rule '{rule.name}' was already configured in the RuleSet", )
 
-        self._rules.put(rule)
+        self._rules.add_last(rule)
         self._rule_hashes.add(rule.__hash__())
 
     def count_rules(self) -> int:
@@ -89,7 +95,7 @@ class RuleSet:
         :return int: Count of rules
         """
 
-        return self._rules.qsize()
+        return len(self._rules)
 
     def apply(self, data: Any, fail_fast: Optional[bool] = True) -> NoReturn:
         """Apply the configured rule set to a specific data.
@@ -99,6 +105,9 @@ class RuleSet:
             collect all the rules that fails with the data before raise it.
         :raises RuleError: when the data is not complaint with some rule of the set
         """
+
+        if self._rules.empty():
+            raise RuleSetError(f'No rules configured on rule set {self._name}')
 
         if fail_fast:
             self._fail_fast_apply(data)
@@ -114,9 +123,7 @@ class RuleSet:
         :raises RuleError: when the data is not complaint with some rule of the set
         """
 
-        while not self._rules.empty():
-            rule = self._rules.get()
-
+        for rule in self._rules:
             if not rule.execute(data):
                 raise RuleError(f"Rule '{rule.name}' fail")
 
@@ -130,9 +137,7 @@ class RuleSet:
 
         errors = []
 
-        while not self._rules.empty():
-            rule = self._rules.get()
-
+        for rule in self._rules:
             if not rule.execute(data):
                 errors.append(rule.name)
 
