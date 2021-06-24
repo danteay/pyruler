@@ -9,6 +9,10 @@ class RulerError(Exception):
     """Base Ruler error."""
 
 
+class RuleSetError(Exception):
+    """Base RuleSet error."""
+
+
 class RulerConfigError(Exception):
     """Base error for Ruler configuration."""
 
