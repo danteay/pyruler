@@ -25,6 +25,9 @@ cover: test ## Execute coverage analysis for executed tests
 cover_html: test ## Execute coverage analysis for executed test and show it as HTML
 	@poetry run coverage html --omit '*virtualenvs*','*tests*' && firefox htmlcov/index.html
 
+cover_xml: test ## Execute coverage analysis for executed test and create an XML report
+	@poetry run coverage xml --omit '*virtualenvs*','*tests*'
+
 install: ## Install project dependencies.
 	@poetry install
 
