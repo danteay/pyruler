@@ -51,6 +51,35 @@ with description('Test LinedList operations:'):
             expect(linked_list.empty()).to(equal(False))
             expect(len(linked_list)).to(equal(5))
 
+        with it('does as last item with alias method'):
+            linked_list = LinkedList((1, 2, 3, 4))
+            linked_list.add(5)
+
+            expect(linked_list.last()).to(equal(5))
+            expect(linked_list.empty()).to(equal(False))
+            expect(len(linked_list)).to(equal(5))
+
+        with it('does many insertions at ones from a list with add_last strategy'):
+            linked_list = LinkedList((1, 2, 3, 4, 5))
+            linked_list.add_many([1, 2, 3, 4, 5])
+
+            expect(linked_list.empty()).to(equal(False))
+            expect(len(linked_list)).to(equal(10))
+
+        with it('does many insertions at ones from a set with add_last strategy'):
+            linked_list = LinkedList((1, 2, 3, 4, 5))
+            linked_list.add_many({1, 2, 3, 4, 5})
+
+            expect(linked_list.empty()).to(equal(False))
+            expect(len(linked_list)).to(equal(10))
+
+        with it('does many insertions at ones from a tuple with add_last strategy'):
+            linked_list = LinkedList((1, 2, 3, 4, 5))
+            linked_list.add_many((1, 2, 3, 4, 5))
+
+            expect(linked_list.empty()).to(equal(False))
+            expect(len(linked_list)).to(equal(10))
+
         with it('does as first items'):
             linked_list = LinkedList((1, 2, 3, 4))
             linked_list.add_first(0)

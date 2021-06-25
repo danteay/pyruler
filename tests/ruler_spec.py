@@ -29,6 +29,51 @@ with description('Should test RuleSet configuration') as self:
 
         expect(rule_set.count_rules()).to(equal(2))
 
+    with it('adds many rules from a list at ones'):
+        rule_set = RuleSet(name='set1')
+
+        rule_set.add_many([
+            Rule(name='rule1', resolver=lambda x: True),
+            Rule(name='rule2', resolver=lambda x: True)
+        ])
+
+        expect(rule_set.count_rules()).to(equal(2))
+
+    with it('checks error by adding many values with conflict for an existing rule'):
+        rule_set = RuleSet(name='set1')
+        rule = Rule(name='rule1', resolver=lambda x: True)
+
+        rule_set.add_rule(rule)
+
+        try:
+            rule_set.add_many([
+                rule,
+                Rule(name='rule2', resolver=lambda x: True)
+            ])
+            assert False
+        except Exception as error:
+            expect(error.args[0]).to(equal("Rule 'rule1' was already configured in the RuleSet"))
+
+    with it('checks error by adding many values with duplicated rules'):
+        rule_set = RuleSet(name='set1')
+        rule = Rule(name='rule1', resolver=lambda x: True)
+
+        try:
+            rule_set.add_many([rule, rule])
+            assert False
+        except Exception as error:
+            expect(error.args[0]).to(equal("Rule 'rule1' is duplicated on the given rules"))
+
+    with it('checks for added rule names'):
+        rule_set = RuleSet(name='set1')
+
+        rule_set.add_many([
+            Rule(name='rule1', resolver=lambda x: True),
+            Rule(name='rule2', resolver=lambda x: True)
+        ])
+
+        expect(rule_set.rule_names()).to(equal(['rule1', 'rule2']))
+
     with it('throws duplicated rule error'):
         rule_set = RuleSet(name='set1')
         rule = Rule(name='rule1', resolver=lambda x: True)

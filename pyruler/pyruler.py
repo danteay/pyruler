@@ -11,6 +11,7 @@ from typing import (
     Set,
     Tuple,
     Union,
+    Iterable,
 )
 
 from .errors import (
@@ -84,10 +85,29 @@ class RuleSet:
         """
 
         if rule.__hash__() in self._rule_hashes:
-            raise RuleSetConfigError(f"Rule '{rule.name}' was already configured in the RuleSet", )
+            raise RuleSetConfigError(f"Rule '{rule.name}' was already configured in the RuleSet")
 
         self._rules.add_last(rule)
         self._rule_hashes.add(rule.__hash__())
+
+    def add_many(self, rules: Iterable[Rule]) -> None:
+        """Add many rules at ones.
+        :param rules: Iterable object of rules
+        """
+
+        hashes = set()
+
+        for rule in rules:
+            if rule.__hash__() in self._rule_hashes:
+                raise RuleSetConfigError(f"Rule '{rule.name}' was already configured in the RuleSet")
+
+            if rule.__hash__() in hashes:
+                raise RuleSetConfigError(f"Rule '{rule.name}' is duplicated on the given rules")
+
+            hashes.add(rule.__hash__())
+
+        self._rules.add_many(rules)
+        self._rule_hashes.update(hashes)
 
     def count_rules(self) -> int:
         """Count the total of rules configured on the set.
@@ -96,6 +116,18 @@ class RuleSet:
         """
 
         return len(self._rules)
+
+    def rule_names(self) -> List[AnyStr]:
+        """Return a list with the names of all the configured rules of the set.
+        :return List[AnyStr]: List of rule names
+        """
+
+        names = []
+
+        for rule in self._rules:
+            names.append(rule.name)
+
+        return names
 
     def apply(self, data: Any, fail_fast: Optional[bool] = True) -> NoReturn:
         """Apply the configured rule set to a specific data.
