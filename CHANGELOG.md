@@ -1,3 +1,9 @@
+## 0.10.2 (2021-06-25)
+
+### Fix
+
+- add missing configuration to package project
+
 ## 0.10.1 (2021-06-25)
 
 ### Fix
