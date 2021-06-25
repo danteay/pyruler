@@ -2,6 +2,19 @@
 name = "pyruler"
 version = "0.10.1"
 description = "Simple and powerful rule engine to generate complex data validations on an easy way"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/danteay/pyruler"
+homepage = "https://github.com/danteay/pyruler"
+documentation = "https://github.com/danteay/pyruler/wiki"
+keywords = ['rule', 'engine', 'ruler', 'package']
+classifiers = [
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
 authors = ["Eduardo Aguilar <dante.aguilar41@gmail.com>"]
 
 [tool.poetry.dependencies]

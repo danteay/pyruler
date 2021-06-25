@@ -6,7 +6,7 @@ Simple and powerful rule engine to generate complex data validations on an easy 
 
 ## Requirements
 
-- Python >= 3.7
+- Python >= 3.6
 
 ### Usage
 
@@ -15,3 +15,7 @@ Simple and powerful rule engine to generate complex data validations on an easy 
 ```bash
 pip3 install pyruler
 ```
+
+### Documentation
+
+[Github Wiki](https://github.com/danteay/pyruler/wiki)
