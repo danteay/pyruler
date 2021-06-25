@@ -1,3 +1,10 @@
+## 0.10.0 (2021-06-25)
+
+### Feat
+
+- support insertion of multiple RuleSet objects at once
+- support for insert many values at ones to the RuleSet
+
 ## 0.9.2 (2021-06-24)
 
 ### Fix
