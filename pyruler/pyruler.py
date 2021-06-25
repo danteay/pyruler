@@ -192,7 +192,7 @@ class Ruler:
     _rule_set_hashes: Set[int]
 
     def __init__(self):
-        self._rule_sets = {}
+        self._rule_sets = dict()
         self._rule_set_hashes = set()
 
     def add_set(self, rule_set: RuleSet) -> NoReturn:
@@ -203,10 +203,31 @@ class Ruler:
         """
 
         if rule_set.__hash__() in self._rule_set_hashes:
-            raise RulerConfigError(f"RuleSet '{rule_set.name}' was already configured on the ruler", )
+            raise RulerConfigError(f"RuleSet '{rule_set.name}' was already configured on the ruler")
 
         self._rule_sets.update({rule_set.name: rule_set})
         self._rule_set_hashes.add(rule_set.__hash__())
+
+    def add_many(self, rule_sets: Iterable[RuleSet]) -> NoReturn:
+        """Add many RuleSet objects at ones.
+        :param rule_sets: Iterable object of rule sets to be added
+        """
+
+        hashes = set()
+        new_sets = dict()
+
+        for rule_set in rule_sets:
+            if rule_set.__hash__() in self._rule_set_hashes:
+                raise RulerConfigError(f"RuleSet '{rule_set.name}' was already configured on the ruler")
+
+            if rule_set.__hash__() in hashes:
+                raise RulerConfigError(f"RuleSet '{rule_set.name}' is duplicated on the given rule sets")
+
+            new_sets.update({rule_set.name: rule_set})
+            hashes.add(rule_set.__hash__())
+
+        self._rule_sets.update(new_sets)
+        self._rule_set_hashes.update(hashes)
 
     def count_sets(self) -> int:
         """Count the total of configured sets.
@@ -215,6 +236,13 @@ class Ruler:
         """
 
         return len(self._rule_sets.keys())
+
+    def rule_set_names(self) -> List[AnyStr]:
+        """Return a list of all configured RuleSet objects in the ruler.
+        :return: List of rule set names
+        """
+
+        return list(self._rule_sets.keys())
 
     def apply(
         self,
@@ -281,7 +309,7 @@ class Ruler:
         rule_set = self._rule_sets.get(set_name, None)
 
         if rule_set is None:
-            raise RulerError(f"Not found RuleSet '{set_name}' on Ruler configuration", )
+            raise RulerError(f"Not found RuleSet '{set_name}' on Ruler configuration")
 
         return rule_set
 

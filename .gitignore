@@ -8,8 +8,9 @@ venv/
 
 # Testing
 .pytest_cache/
+htmlcov/
 .coverage
-htmlcov
+coverage.xml
 
 # Single files
 .DS_Store

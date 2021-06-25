@@ -144,6 +144,46 @@ with description('Should test Ruler configuration') as self:
 
         expect(ruler.count_sets()).to(equal(2))
 
+    with it('adds many rule sets at once'):
+        ruler = Ruler()
+        ruler.add_many([
+            RuleSet(name='set1'),
+            RuleSet(name='set2')
+        ])
+
+        expect(ruler.count_sets()).to(equal(2))
+
+    with it('checks error by adding many values with conflict for an existing RuleSet'):
+        ruler = Ruler()
+        rule_set = RuleSet(name='set1')
+
+        ruler.add_set(rule_set)
+
+        try:
+            ruler.add_many([rule_set, RuleSet(name='set2')])
+            assert False
+        except Exception as error:
+            expect(error.args[0]).to(equal("RuleSet 'set1' was already configured on the ruler"))
+
+    with it('checks error by adding many values with duplicated rules'):
+        ruler = Ruler()
+        rule_set = RuleSet(name='set1')
+
+        try:
+            ruler.add_many([rule_set, rule_set])
+            assert False
+        except Exception as error:
+            expect(error.args[0]).to(equal("RuleSet 'set1' is duplicated on the given rule sets"))
+
+    with it('checks for rule set names'):
+        ruler = Ruler()
+        ruler.add_many([
+            RuleSet(name='set1'),
+            RuleSet(name='set2')
+        ])
+
+        expect(ruler.rule_set_names()).to(equal(['set1', 'set2']))
+
     with it('throws duplicated RuleSet error'):
         ruler = Ruler()
         rule_set = RuleSet(name='set1')
@@ -208,3 +248,13 @@ with description('Should test Ruler configuration') as self:
         ruler.apply(sets='All', data={})
 
         assert True
+
+    with it('checks for error when try to execute a non configured rule set'):
+        ruler = Ruler()
+        ruler.add_set(RuleSet(name='set1'))
+
+        try:
+            ruler.apply(sets='set2', data={})
+            assert False
+        except Exception as error:
+            expect(error.args[0]).to(equal("Not found RuleSet 'set2' on Ruler configuration"))
