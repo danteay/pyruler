@@ -35,13 +35,13 @@ class LinkedList(Generic[T], Sized, Iterable, ABC):
     _last: Optional[ListNode]
     _size: int
 
-    def __init__(self, values: Iterable[T] = None):
+    def __init__(self, values: Optional[Iterable[T]] = None):
         self._first = None
         self._last = None
         self._size = 0
 
         if values is not None:
-            self._init_with_values(values)
+            self.add_many(values)
 
     def first(self) -> T:
         """Return first element of the list.
@@ -87,20 +87,27 @@ class LinkedList(Generic[T], Sized, Iterable, ABC):
 
         self._size += 1
 
+    def add(self, value: T) -> NoReturn:
+        """This is an alias for add_last method.
+        :param value: Value to be added at the end of the list
+        """
+
+        self.add_last(value)
+
+    def add_many(self, values: Iterable[T]) -> NoReturn:
+        """Add many items to the list at ones with the add_last method.
+        :param values: Iterable object with values to be added to the LinkedList
+        """
+
+        for elem in values:
+            self.add_last(elem)
+
     def empty(self) -> bool:
         """Return a boolean assertion if the list is empty.
         :return bool: Assertion
         """
 
         return self._size < 1
-
-    def _init_with_values(self, values: Iterable[T]):
-        """Add Nodes from an iterable object.
-        :param values: elements to be added to the list.
-        """
-
-        for elem in values:
-            self.add_last(elem)
 
     def __repr__(self):
         node = self._first
