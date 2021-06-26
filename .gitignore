@@ -4,6 +4,8 @@ venv/
 
 # Distribution
 dist/
+build/
+_build/
 
 # IDE config
 .idea/

@@ -4,6 +4,7 @@ version = "0.10.2"
 description = "Simple and powerful rule engine to generate complex data validations on an easy way"
 license = "MIT"
 readme = "README.md"
+authors = ["Eduardo Aguilar <dante.aguilar41@gmail.com>"]
 repository = "https://github.com/danteay/pyruler"
 homepage = "https://github.com/danteay/pyruler"
 documentation = "https://github.com/danteay/pyruler/wiki"
@@ -15,7 +16,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
-authors = ["Eduardo Aguilar <dante.aguilar41@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -28,6 +28,8 @@ yapf = "~=0.31.0"
 pylint = "~=2.8.2"
 isort = "~=5.9.1"
 radon = "~=5.0.1"
+Sphinx = "^4.0.2"
+sphinx-rtd-theme = "^0.5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

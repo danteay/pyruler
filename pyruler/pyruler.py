@@ -5,13 +5,13 @@ from typing import (
     AnyStr,
     Callable,
     Dict,
+    Iterable,
     List,
     NoReturn,
     Optional,
     Set,
     Tuple,
     Union,
-    Iterable,
 )
 
 from .errors import (
@@ -25,7 +25,11 @@ from .linked_list import LinkedList
 
 
 class Rule:
-    """Base Rule definition."""
+    """Definition for atomic operation that validates data.
+
+    :param name: Name of the rule
+    :param resolver: Callable function that receives exactly 1 param as the data that will be validated
+    """
 
     _resolve: Callable
     _name: AnyStr
@@ -61,7 +65,10 @@ class Rule:
 
 
 class RuleSet:
-    """Rule Set definition to apply a set of rules to a context info."""
+    """Rule Set definition to apply a set of rules to a context info.
+
+    :param name: Identifier name of the rule set
+    """
 
     _name: AnyStr
     _rules: LinkedList[Rule]
@@ -92,6 +99,7 @@ class RuleSet:
 
     def add_many(self, rules: Iterable[Rule]) -> None:
         """Add many rules at ones.
+
         :param rules: Iterable object of rules
         """
 
@@ -119,6 +127,7 @@ class RuleSet:
 
     def rule_names(self) -> List[AnyStr]:
         """Return a list with the names of all the configured rules of the set.
+
         :return List[AnyStr]: List of rule names
         """
 
@@ -186,7 +195,9 @@ class RuleSet:
 
 
 class Ruler:
-    """Compound ruler class."""
+    """Store RuleSet objects to be applied over a given data. This class can apply one single stored RuleSet,
+    a list of of some of the configured RuleSet objects or all of them.
+    """
 
     _rule_sets: Dict[AnyStr, RuleSet]
     _rule_set_hashes: Set[int]
@@ -210,6 +221,7 @@ class Ruler:
 
     def add_many(self, rule_sets: Iterable[RuleSet]) -> NoReturn:
         """Add many RuleSet objects at ones.
+
         :param rule_sets: Iterable object of rule sets to be added
         """
 
@@ -239,6 +251,7 @@ class Ruler:
 
     def rule_set_names(self) -> List[AnyStr]:
         """Return a list of all configured RuleSet objects in the ruler.
+
         :return: List of rule set names
         """
 
@@ -246,8 +259,8 @@ class Ruler:
 
     def apply(
         self,
-        sets: Union[AnyStr, Tuple, List[AnyStr], Set[AnyStr]],
         data: Any,
+        sets: Optional[Union[AnyStr, Tuple, List[AnyStr], Set[AnyStr]]] = None,
         fail_fast: Optional[bool] = True,
     ) -> NoReturn:
         """Apply specified rule set, all of the stored sets or a sub collection
@@ -270,8 +283,8 @@ class Ruler:
 
     def _apply_set(
         self,
-        set_names: Set[AnyStr],
         data: Any,
+        set_names: Set[AnyStr],
         fail_fast: Optional[bool] = True,
     ) -> NoReturn:
         """Apply configured rule sets to the provided data.
@@ -313,14 +326,14 @@ class Ruler:
 
         return rule_set
 
-    def _process_set_names(self, sets: Any) -> Union[AnyStr, Set[AnyStr]]:
+    def _process_set_names(self, sets: Optional[Any] = None) -> Union[AnyStr, Set[AnyStr]]:
         """Verify the set names that will be applied and format it.
 
         :param sets: Set name or List of set names.
         :return Union[AnyStr, Set[AnyStr]]: Formatted set names
         """
 
-        if isinstance(sets, str) and sets.lower() == 'all':
+        if sets is None:
             return set(self._rule_sets.keys())
 
         if isinstance(sets, (tuple, list)):

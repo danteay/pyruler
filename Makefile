@@ -28,6 +28,12 @@ cover_html: test ## Execute coverage analysis for executed test and show it as H
 cover_xml: test ## Execute coverage analysis for executed test and create an XML report
 	@poetry run coverage xml --omit '*virtualenvs*','*tests*'
 
+docs: ## Compile Sphinx documentation
+	@poetry run sphinx-apidoc -f -o ./docs ./pyruler
+
+docs_html: docs ## Create HTML docs from Sphinx
+	@poetry run make -C docs html
+
 install: ## Install project dependencies.
 	@poetry install
 
