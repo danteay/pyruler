@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyruler"
-version = "0.10.2"
+version = "0.11.0"
 description = "Simple and powerful rule engine to generate complex data validations on an easy way"
 license = "MIT"
 readme = "README.md"
