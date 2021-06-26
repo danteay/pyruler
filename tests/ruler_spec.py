@@ -32,10 +32,7 @@ with description('Should test RuleSet configuration') as self:
     with it('adds many rules from a list at ones'):
         rule_set = RuleSet(name='set1')
 
-        rule_set.add_many([
-            Rule(name='rule1', resolver=lambda x: True),
-            Rule(name='rule2', resolver=lambda x: True)
-        ])
+        rule_set.add_many([Rule(name='rule1', resolver=lambda x: True), Rule(name='rule2', resolver=lambda x: True)])
 
         expect(rule_set.count_rules()).to(equal(2))
 
@@ -46,10 +43,7 @@ with description('Should test RuleSet configuration') as self:
         rule_set.add_rule(rule)
 
         try:
-            rule_set.add_many([
-                rule,
-                Rule(name='rule2', resolver=lambda x: True)
-            ])
+            rule_set.add_many([rule, Rule(name='rule2', resolver=lambda x: True)])
             assert False
         except Exception as error:
             expect(error.args[0]).to(equal("Rule 'rule1' was already configured in the RuleSet"))
@@ -67,10 +61,7 @@ with description('Should test RuleSet configuration') as self:
     with it('checks for added rule names'):
         rule_set = RuleSet(name='set1')
 
-        rule_set.add_many([
-            Rule(name='rule1', resolver=lambda x: True),
-            Rule(name='rule2', resolver=lambda x: True)
-        ])
+        rule_set.add_many([Rule(name='rule1', resolver=lambda x: True), Rule(name='rule2', resolver=lambda x: True)])
 
         expect(rule_set.rule_names()).to(equal(['rule1', 'rule2']))
 
@@ -146,10 +137,7 @@ with description('Should test Ruler configuration') as self:
 
     with it('adds many rule sets at once'):
         ruler = Ruler()
-        ruler.add_many([
-            RuleSet(name='set1'),
-            RuleSet(name='set2')
-        ])
+        ruler.add_many([RuleSet(name='set1'), RuleSet(name='set2')])
 
         expect(ruler.count_sets()).to(equal(2))
 
@@ -177,10 +165,7 @@ with description('Should test Ruler configuration') as self:
 
     with it('checks for rule set names'):
         ruler = Ruler()
-        ruler.add_many([
-            RuleSet(name='set1'),
-            RuleSet(name='set2')
-        ])
+        ruler.add_many([RuleSet(name='set1'), RuleSet(name='set2')])
 
         expect(ruler.rule_set_names()).to(equal(['set1', 'set2']))
 
@@ -243,9 +228,7 @@ with description('Should test Ruler configuration') as self:
         ruler.add_set(rule_set2)
         ruler.add_set(rule_set3)
 
-        ruler.apply(sets='all', data={})
-        ruler.apply(sets='ALL', data={})
-        ruler.apply(sets='All', data={})
+        ruler.apply(data={})
 
         assert True
 
