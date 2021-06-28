@@ -27,7 +27,6 @@ jobs:
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
-          python_version: 3.8
 
       - name: Install dependencies
         run: poetry install
@@ -96,7 +95,6 @@ jobs:
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
-          python_version: 3.8
 
       - name: Install dependencies
         run: poetry install
