@@ -18,4 +18,4 @@ pip3 install pyruler
 
 ### Documentation
 
-[Github Wiki](https://github.com/danteay/pyruler/wiki)
+[Github Wiki](https://pyruler.readthedocs.io)
