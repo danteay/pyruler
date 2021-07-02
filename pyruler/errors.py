@@ -5,6 +5,10 @@ class RuleError(Exception):
     """Base Rule error."""
 
 
+class RuleConfigError(Exception):
+    """Error for Rule configuration"""
+
+
 class RulerError(Exception):
     """Base Ruler error."""
 
