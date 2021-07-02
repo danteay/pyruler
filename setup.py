@@ -7,7 +7,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name='pyruler',
-    version='0.11.1',
+    version='0.12.0',
     packages=find_packages(),
     description='Simple and powerful python rule engine',
     long_description=long_description,

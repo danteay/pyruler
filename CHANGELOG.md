@@ -1,3 +1,9 @@
+## 0.12.0 (2021-07-02)
+
+### Feat
+
+- add support to raise custom exceptions on rule validation failures
+
 ## 0.11.1 (2021-06-28)
 
 ### Fix
