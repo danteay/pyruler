@@ -1,4 +1,4 @@
-"""Custom creation of a LinkedList."""
+"""General purpose LinkedList that handle RuleSet Rules."""
 
 # pylint: disable=C0103
 
@@ -29,7 +29,10 @@ class ListNode:
 
 
 class LinkedList(Generic[T], Sized, Iterable, ABC):
-    """Custom LinkedList class."""
+    """LinkedList class.
+
+    :param values: Optional iterable object to initialize LinkedList object nodes
+    """
 
     _first: Optional[ListNode]
     _last: Optional[ListNode]

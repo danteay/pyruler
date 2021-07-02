@@ -1,18 +1,42 @@
 Pyruler API
 =====================
 
+Module contents
+---------------
+
+.. automodule:: pyruler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
 
-pyruler.pyruler module
-----------------------------
+Module pyruler.pyruler
+---------------------------
 
 .. automodule:: pyruler.pyruler
    :members:
    :undoc-members:
    :show-inheritance:
 
-pyruler.errors module
+Module pyruler.ruleset
+---------------------------
+
+.. automodule:: pyruler.ruleset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module pyruler.rule
+---------------------------
+
+.. automodule:: pyruler.rule
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module pyruler.errors
 ---------------------------
 
 .. automodule:: pyruler.errors
@@ -20,18 +44,10 @@ pyruler.errors module
    :undoc-members:
    :show-inheritance:
 
-pyruler.linked_list module
+Module pyruler.linked_list
 ---------------------------
 
 .. automodule:: pyruler.linked_list
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: pyruler
    :members:
    :undoc-members:
    :show-inheritance:
